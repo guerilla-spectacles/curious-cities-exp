@@ -1,0 +1,49 @@
+extends layout
+block content
+  .row
+    form.small-12.columns.medium-6(method="POST", action="/thing")
+      .row
+        .small-12.columns
+          label
+            | Subject
+          input(type='text', placeholder='Title of convo', name='title')
+      .row
+        .small-12.columns
+          label
+            | Subject
+          input(type='file', name='picture')
+      .row
+        .small-12.columns
+          label
+            | Subject Matter
+          textarea.commentBox(placeholder='What do you want to talk about?', name='subject')
+      .row
+        .small-12.medium-4.columns.small-centered
+          input.button.postfix(type="submit" value="Create New thing")
+
+    .small-12.columns.medium-6
+      each item in things
+        div.thing
+          h4
+            a(href="/p/#{item.path.key}")
+              | #{item.value["sub-title"]}
+          div.posted-date
+            blockquote
+              | posted #{item.value.date}
+          hr
+  .row
+    .small-12
+      - page = 0;
+      - for (var i = 1; i <= totalCount; i++) {
+         - if (i % 10 == 0) {
+           - page++
+           a.pageNum(href="/?page=#{page}")
+            | #{page}
+         - }
+
+         - if (i == totalCount) {
+           - page++
+           a.pageNum(href="/?page=#{page}")
+            | #{page}
+         - }
+      - }
